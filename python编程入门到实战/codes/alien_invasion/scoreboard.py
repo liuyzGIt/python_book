@@ -5,6 +5,7 @@ from ship import Ship
 
 
 class Scoreboard:
+    """计分板管理类"""
     def __init__(self, ai_settings, screen, stats):
         self.ai_settings = ai_settings
         self.screen = screen
@@ -18,7 +19,7 @@ class Scoreboard:
         self.pre_high_score()
         self.pre_level()
         self.pre_ships()
-
+    
     def pre_high_score(self):
         high_score = int(round(self.stats.high_score, -1))
         high_score_str = "{:,}".format(high_score)

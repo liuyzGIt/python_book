@@ -68,14 +68,78 @@ def josephus_list_2(n, k, m):
     for num in range(n, 0, -1):
         pos = (pos + m -1) % num
         yield persons.pop(pos)
-       
+ 
+ 
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        
+
+class LCList:
+    def __init__(self):
+        self.rear = None  # 只要一个尾指针
+        
+    def is_empty(self):
+        return self.rear is None
+        
+    def prepend(self, data):
+        """前端插入"""
+        p = Node(data)
+        if self.rear == None:
+            p.next = p
+            self.rear = p
+        else:
+            p.next = self.rear.next
+            self.rear.next = p
+            
+    def append(self, data):
+        self.prepend(data)
+        self.rear = self.rear.next
+        
+        
+    def pop(self): # 前端出栈
+        if self.is_empty():
+            raise ValueError('empty in pop')
+        p = self.rear.next
+        if self.rear is p:
+            self.rear = None
+        else:
+            self.rear.next = p.next
+        return p.data
+        
+class Josephus(LCList):
+    def __init__(self, n, k, m):
+        super().__init__()
+        for i in range(n):
+            self.append(i+1)
+        self.turn(k-1)
+        
+        while not self.is_empty():
+            self.turn(m-1)
+            print(self.pop())
+    
+        
+    def turn(self, m):
+        for i in range(m):
+            self.rear = self.rear.next
+    
+    
+                
+        
+Josephus(10, 3, 7)       
+        
+    
+    
+ 
+print('-' * 100)
 
 for i in josephus_queue(10, 3, 7):
     print(i)
     
 
-for i in josephus_list_2(10, 3, 7):
-    print(i)
+# for i in josephus_list_2(10, 3, 7):
+    # print(i)
     
     
     
